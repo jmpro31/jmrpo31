@@ -3,141 +3,391 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio Profesional</title>
+  <title>Portfolio — José María</title>
   <style>
-    * {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
-    body {color:#222;}
-    header {display:flex; justify-content:space-between; align-items:center; padding:20px; background:#fff; position:fixed; width:100%; top:0; z-index:10; box-shadow:0 2px 5px rgba(0,0,0,0.1);}    
-    header .logo {font-size:1.5rem; font-weight:bold;}
-    header nav a {margin-left:20px; text-decoration:none; color:#333; font-weight:bold;}
-    header nav a:hover {color:#0077cc;}    
+    :root{
+      --bg:#06070a; --card:#0e1116; --muted:#9aa4b2; --accent:#00e5ff; --neon:#7c3cff; --glass: rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Segoe UI,Arial,sans-serif}
+    html,body{height:100%}
+    body{background:linear-gradient(120deg,#031428 0%, #071229 50%, #0b1220 100%);color:var(--muted);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-    .hero {height:100vh; background:url('https://picsum.photos/1920/1080?grayscale') center/cover no-repeat; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:20px;}    
-    .hero h1 {font-size:3rem; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.6);}    
-    .hero h2 {font-size:1.5rem; margin-top:10px; color:#eee;}
-    .hero a {margin-top:20px; padding:12px 25px; background:#0077cc; color:#fff; border-radius:8px; text-decoration:none; font-weight:bold; transition:0.3s;}    
-    .hero a:hover {background:#005fa3;}    
+    /* animated gradient blobs */
+    .bg-blobs{position:fixed;inset:0;pointer-events:none;z-index:0;}
+    .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.6;mix-blend-mode:screen;animation:float 12s ease-in-out infinite}
+    .b1{width:480px;height:480px;left:-10%;top:10%;background:linear-gradient(45deg,var(--neon),var(--accent));}
+    .b2{width:360px;height:360px;right:-5%;top:30%;background:linear-gradient(135deg,#00ffd5,#0066ff);animation-duration:18s}
+    .b3{width:300px;height:300px;left:15%;bottom:-5%;background:linear-gradient(90deg,#ff2dd4,#7c3cff);animation-duration:16s}
+    @keyframes float{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}100%{transform:translateY(0) scale(1)}}
 
-    .sobre-mi {padding:100px 20px; max-width:1100px; margin:auto; text-align:center;}    
-    .sobre-mi img {width:150px; height:150px; border-radius:50%; object-fit:cover; margin-bottom:20px;}    
-    .sobre-mi .skills {margin-top:20px; display:flex; justify-content:center; flex-wrap:wrap; gap:10px;}    
-    .skill {background:#0077cc; color:#fff; padding:8px 15px; border-radius:20px; font-size:0.9rem;}    
+    /* header */
+    header{position:fixed;top:0;left:0;right:0;z-index:30;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    .logo{display:flex;align-items:center;gap:12px;color:#fff;font-weight:700;font-size:1.05rem}
+    .logo svg{width:36px;height:36px;filter:drop-shadow(0 6px 14px rgba(124,60,255,0.18))}
+    nav a{color:var(--muted);margin-left:18px;text-decoration:none;font-weight:600}
+    nav a:hover{color:var(--accent);text-shadow:0 0 8px rgba(0,229,255,0.08)}
 
-    .portafolio {padding:100px 20px; background:#f7f7f7;}    
-    .portafolio h2 {text-align:center; margin-bottom:40px;}    
-    .grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; max-width:1100px; margin:auto;}    
-    .card {background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition:0.3s;}    
-    .card:hover {transform:scale(1.03);}    
-    .card img {width:100%; height:160px; object-fit:cover;}    
-    .card-content {padding:20px;}    
-    .card-content h3 {margin-bottom:10px;}    
-    .card-content p {font-size:0.9rem; color:#555; margin-bottom:15px;}    
-    .card-content a {padding:10px 20px; background:#0077cc; color:#fff; text-decoration:none; border-radius:6px;}    
-    .card-content a:hover {background:#005fa3;}    
+    /* hero */
+    .hero{min-height:86vh;display:flex;align-items:center;padding:120px 20px 40px;position:relative;z-index:10}
+    .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:center}
+    .hero-title h1{font-size:3rem;color:#fff;letter-spacing:0.5px}
+    .hero-title p{margin-top:12px;color:var(--muted);font-size:1.05rem}
+    .hero-cta{margin-top:22px;display:flex;gap:12px}
+    .btn{padding:12px 18px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent),var(--neon));color:#001;cursor:pointer;font-weight:700;box-shadow:0 6px 20px rgba(0,229,255,0.06);transition:transform .18s,box-shadow .18s}
+    .btn:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(124,60,255,0.12)}
+    .ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.06)}
 
-    .contacto {padding:100px 20px; max-width:600px; margin:auto;}    
-    .contacto h2 {text-align:center; margin-bottom:30px;}    
-    form {display:flex; flex-direction:column; gap:15px;}    
-    input, textarea {padding:12px; border:1px solid #ccc; border-radius:6px; font-size:1rem;}    
-    button {padding:12px; background:#0077cc; color:#fff; border:none; border-radius:6px; font-size:1rem; cursor:pointer;}    
-    button:hover {background:#005fa3;}    
+    /* card profile */
+    .profile-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:18px;box-shadow:0 8px 40px rgba(4,6,19,0.6);border:1px solid rgba(255,255,255,0.04)}
+    .avatar{width:110px;height:110px;border-radius:50%;overflow:hidden;border:3px solid rgba(124,60,255,0.28)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .tag{margin-top:10px;color:var(--accent);font-weight:700}
+    .mini-stats{display:flex;gap:12px;margin-top:12px}
+    .stat{background:var(--glass);padding:8px 12px;border-radius:10px;font-size:0.9rem}
 
-    footer {text-align:center; padding:20px; background:#222; color:#fff; margin-top:50px;}    
-    .redes {margin-top:10px;}    
-    .redes img {width:30px; margin:0 10px; filter:invert(1); cursor:pointer; transition:0.3s;}    
-    .redes img:hover {transform:scale(1.2);}    
+    /* sections */
+    section{padding:80px 20px 60px;position:relative;z-index:10}
+    h2{color:#fff;margin-bottom:18px;font-size:1.5rem}
+    .container{max-width:1100px;margin:0 auto}
+
+    /* about */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+    .bio{background:var(--card);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .skill{background:transparent;border:1px solid rgba(124,60,255,0.14);padding:8px 12px;border-radius:999px;color:#cdeef7;font-weight:600}
+
+    /* timeline */
+    .timeline{position:relative;margin-top:18px}
+    .timeline:before{content:'';position:absolute;left:14px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent),var(--neon));border-radius:2px}
+    .event{position:relative;padding:12px 16px 12px 44px;margin-bottom:14px;background:rgba(255,255,255,0.02);border-radius:10px}
+    .event h4{color:#fff;margin-bottom:6px}
+    .event small{color:var(--muted)}
+
+    /* portfolio */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);transition:transform .25s,box-shadow .25s}
+    .card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(11,20,40,0.6)}
+    .card img{width:100%;height:160px;object-fit:cover;display:block}
+    .card-content{padding:16px}
+    .card-content h3{color:#fff;margin-bottom:8px}
+    .card-content p{color:var(--muted);font-size:0.95rem;margin-bottom:12px}
+    .ver-mas{background:transparent;border:1px solid rgba(124,60,255,0.14);padding:8px 12px;border-radius:8px;color:var(--accent);cursor:pointer}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,12,0.6);visibility:hidden;opacity:0;transition:opacity .18s,visibility .18s;z-index:60}
+    .modal.open{visibility:visible;opacity:1}
+    .modal-card{background:#071224;padding:20px;border-radius:12px;max-width:900px;width:94%;border:1px solid rgba(255,255,255,0.04)}
+    .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .modal img{width:100%;height:220px;object-fit:cover;border-radius:8px}
+
+    /* gallery carousel */
+    .carousel{position:relative;overflow:hidden;border-radius:12px}
+    .slides{display:flex;transition:transform .4s ease}
+    .slide{min-width:100%;}
+    .carousel-controls{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;transform:translateY(-50%);padding:0 8px}
+    .ctrl{background:rgba(0,0,0,0.35);border:none;padding:8px;border-radius:8px;color:#fff}
+
+    /* contact */
+    form{display:flex;flex-direction:column;gap:12px}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:8px;color:#fff}
+    input::placeholder,textarea::placeholder{color:#9aa4b2}
+
+    /* footer */
+    footer{padding:30px 20px;text-align:center;color:var(--muted)}
+
+    /* cursor */
+    .cursor{position:fixed;left:0;top:0;width:18px;height:18px;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:9999;border:2px solid var(--accent);box-shadow:0 0 18px rgba(0,229,255,0.08)}
+
+    /* responsive */
+    @media(max-width:900px){.hero-inner{grid-template-columns:1fr;}.avatar{width:90px;height:90px}.about-grid{grid-template-columns:1fr}.hero-title h1{font-size:2.2rem}}
+
+    /* reveal animation */
+    .reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+    .reveal.show{opacity:1;transform:none}
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">MiPortfolio</div>
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#sobre-mi">Sobre mí</a>
-    <a href="#portafolio">Portafolio</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
-</header>
-
-<section id="inicio" class="hero">
-  <h1>José María</h1>
-  <h2>estudiante 4 eso</h2>
-  <a href="#portafolio">Ver Portafolio</a>
-</section>
-
-<section id="sobre-mi" class="sobre-mi">
-  <h2>Sobre mí</h2>
-  <img src="imagenes/foto1" alt="Foto del barrio">
-  <p>Soy un alumno que saca muy buenas notas y juega en el barrio peral.</p>
-  <div class="skills">
-    <div class="skill">HTML</div>
-    <div class="skill">CSS</div>
-    <div class="skill">JavaScript</div>
-    <div class="skill">React</div>
-    <div class="skill">Git</div>
+  <div class="bg-blobs" aria-hidden>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
   </div>
-</section>
 
-<section id="portafolio" class="portafolio">
-  <h2>Portafolio</h2>
-  <div class="grid">
-    <div class="card">
-      <img src="imagenes/foto22.jpeg.png" alt="Proyecto 1">
-      <div class="card-content">
-        <h3>el 9</h3>
-        <p>Juego de extremo derecho en mi equipo</p>
-        <a href="#">Ver más</a>
+  <div class="cursor" id="cursor"></div>
+
+  <header>
+    <div class="logo">
+      <!-- balón SVG + nombre -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="url(#g)" stroke-width="1.6"/><path d="M6 10l3 2 2-3 3 1 2-2 2 3" stroke="#fff" stroke-opacity="0.9" stroke-width="0.9" fill="none"/></svg>
+      José María
+    </div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#portafolio">Portafolio</a>
+      <a href="#galeria">Galería</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+  <section id="inicio" class="hero">
+    <div class="hero-inner container">
+      <div>
+        <div class="hero-title reveal">
+          <h1>José María — Extremo derecho (9)</h1>
+          <p>Soy un estudiante de 15 años de Maristas. Fan de las mates y las ciencias, sueño con ser ingeniero aeronáutico. Juego en Barrio Peral y me encanta competir con mis amigos.</p>
+        </div>
+
+        <div class="hero-cta reveal">
+          <button class="btn" onclick="document.getElementById('portafolio').scrollIntoView({behavior:'smooth'})">Ver portafolio</button>
+          <button class="btn ghost" onclick="document.getElementById('sobre-mi').scrollIntoView({behavior:'smooth'})">Sobre mí</button>
+        </div>
+
+        <div class="reveal" style="margin-top:18px;display:flex;gap:10px;align-items:center">
+          <div style="font-size:0.95rem;color:var(--muted)">Me encanta:</div>
+          <div class="skill">Fútbol</div>
+          <div class="skill">Mates</div>
+          <div class="skill">Ciencias</div>
+          <div class="skill">Canelones 🍝</div>
+        </div>
+      </div>
+
+      <aside class="profile-card reveal">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="avatar"><img src="https://picsum.photos/seed/jose/400" alt="José María"></div>
+          <div>
+            <div style="color:#fff;font-weight:700">José María</div>
+            <div class="tag">Extremo derecho • Nº9</div>
+            <div class="mini-stats">
+              <div class="stat">15 años</div>
+              <div class="stat">Maristas</div>
+              <div class="stat">Barrio Peral</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;color:var(--muted);font-size:0.95rem">Aspirante a Ingeniero Aeronáutico • Amante de las matemáticas y las ciencias. Siempre listo para aprender y mejorar.</div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="sobre-mi">
+    <div class="container">
+      <h2>Sobre mí</h2>
+      <div class="about-grid">
+        <div class="bio reveal">
+          <p>Soy José María, estudiante de 4º ESO con una pasión grande por la ciencia y el fútbol. Juego como extremo derecho en el Barrio Peral con el dorsal 9. Me encantan los retos matemáticos y los proyectos donde puedo aplicar lógica y creatividad.</p>
+
+          <h3 style="color:#fff;margin-top:12px">Habilidades</h3>
+          <div class="skills">
+            <div class="skill">HTML</div>
+            <div class="skill">CSS</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">Resolución de problemas</div>
+            <div class="skill">Trabajo en equipo</div>
+            <div class="skill">Cálculo y álgebra</div>
+          </div>
+
+          <h3 style="color:#fff;margin-top:14px">Logros</h3>
+          <div class="timeline">
+            <div class="event">
+              <h4>Mejor jugador del mes - Club Barrio Peral</h4>
+              <small>2025 • Premio al esfuerzo y goles decisivos</small>
+            </div>
+            <div class="event">
+              <h4>Nota máxima en matemáticas</h4>
+              <small>Último trimestre • 10/10</small>
+            </div>
+            <div class="event">
+              <h4>Proyecto de Ciencias — Feria Escolar</h4>
+              <small>2024 • Diseño de maqueta aerodinámica</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <h3 style="color:#fff">Timeline</h3>
+          <div class="timeline">
+            <div class="event"><h4>2013</h4><small>Aprendí a montar en bici</small></div>
+            <div class="event"><h4>2018</h4><small>Empecé a jugar en el barrio</small></div>
+            <div class="event"><h4>2023</h4><small>Competí en la liga local con el dorsal 9</small></div>
+            <div class="event"><h4>2025</h4><small>Decidí estudiar Ingeniería Aeronáutica</small></div>
+          </div>
+
+          <h3 style="color:#fff;margin-top:12px">Galería rápida</h3>
+          <div class="carousel" id="miniCarousel" style="margin-top:10px">
+            <div class="slides">
+              <div class="slide"><img src="https://picsum.photos/seed/p1/800/400" alt="foto1"></div>
+              <div class="slide"><img src="https://picsum.photos/seed/p2/800/400" alt="foto2"></div>
+              <div class="slide"><img src="https://picsum.photos/seed/p3/800/400" alt="foto3"></div>
+            </div>
+            <div class="carousel-controls">
+              <button class="ctrl" data-action="prev">◀</button>
+              <button class="ctrl" data-action="next">▶</button>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="card">
-      <img src="imagenes/foto21.jpeg.png" alt="Proyecto 2">
-      <div class="card-content">
-        <h3>Mi equipo</h3>
-        <p>Mi equipo va 5 en liga.</p>
-        <a href="#">Ver más</a>
+  <section id="portafolio">
+    <div class="container">
+      <h2>Portafolio</h2>
+      <div class="grid">
+        <div class="card reveal">
+          <img src="imagenes/foto22.jpeg.png" alt="el 9">
+          <div class="card-content">
+            <h3>El 9 — Extremo derecho</h3>
+            <p>Destreza en bandas, velocidad y visión de pase. Goles y asistencias clave.</p>
+            <button class="ver-mas" data-proj="1">Ver más</button>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <img src="imagenes/foto21.jpeg.png" alt="Mi equipo">
+          <div class="card-content">
+            <h3>Mi equipo</h3>
+            <p>Cooperación y espíritu de equipo: actualmente 5º en liga.</p>
+            <button class="ver-mas" data-proj="2">Ver más</button>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <img src="imagenes/foto5.jpeg" alt="Curriculum">
+          <div class="card-content">
+            <h3>Currículum</h3>
+            <p>Habilidades personales y académicas: me encantan las mates y la ciencia.</p>
+            <button class="ver-mas" data-proj="3">Ver más</button>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <img src="imagenes/foto4.jpeg" alt="El goat">
+          <div class="card-content">
+            <h3>El goat</h3>
+            <p>Apasionado por mejorar y aprender cada día. Trabajo duro en entrenamiento.</p>
+            <button class="ver-mas" data-proj="4">Ver más</button>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="card">
-      <img src="imagenes/foto5.jpeg" alt="Proyecto 3">
-      <div class="card-content">
-        <h3>Curriculum</h3>
-        <p>Se montar en bici.</p>
-        <a href="#">Ver más</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="imagenes/foto4.jpeg" alt="Proyecto 4">
-      <div class="card-content">
-        <h3>El goat</h3>
-        <p>Alumno bueno no, bueno bueno.</p>
-        <a href="#">Ver más</a>
+  <!-- modal plantilla -->
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <button id="closeModal" style="float:right;background:transparent;border:none;color:var(--muted);font-size:18px;cursor:pointer">✖</button>
+      <div id="modalContent" class="modal-grid">
+        <div>
+          <img id="modalImg" src="https://picsum.photos/800/400" alt="proyecto">
+        </div>
+        <div>
+          <h3 id="modalTitle" style="color:#fff">Título</h3>
+          <p id="modalDesc" style="color:var(--muted)">Descripción larga del proyecto o logro. Aquí puedes poner más detalles: estadísticas, enlaces o videos.</p>
+          <div style="margin-top:12px"><a id="modalLink" href="#" class="btn">Ir al proyecto</a></div>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<section id="contacto" class="contacto">
-  <h2>Contacto</h2>
-  <form>
-    <input type="Mi nombre" placeholder="José María" required>
-    <input type="email" placeholder="josemariamaring.car@maristasmediterranea.com" required>
-    <textarea rows="5" placeholder="Mensaje" required></textarea>
-    <button type="submit">Enviar</button>
-  </form>
-</section>
+  <section id="galeria">
+    <div class="container">
+      <h2>Galería</h2>
+      <div class="grid">
+        <div class="card reveal"><img src="https://picsum.photos/seed/g1/600/350" alt="g1"></div>
+        <div class="card reveal"><img src="https://picsum.photos/seed/g2/600/350" alt="g2"></div>
+        <div class="card reveal"><img src="https://picsum.photos/seed/g3/600/350" alt="g3"></div>
+        <div class="card reveal"><img src="https://picsum.photos/seed/g4/600/350" alt="g4"></div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  <p>© 2025 Todos los derechos reservados.</p>
-  <div class="redes">
-    <img src="imagenes/foto4.jpeg" alt="Instagram">
-    <img src="imagenes/foto3.jpeg" alt="Facebook">
-    <img src="imagenes/foto2.jpeg" alt="Twitter">
-  </div>
-</footer>
+  <section id="contacto">
+    <div class="container">
+      <h2>Contacto</h2>
+      <form id="contactForm" class="reveal">
+        <input type="text" name="nombre" placeholder="Tu nombre" value="José María" required>
+        <input type="email" name="email" placeholder="tu@correo.com" required>
+        <textarea name="mensaje" rows="5" placeholder="Escribe tu mensaje" required></textarea>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button type="submit" class="btn">Enviar</button>
+          <button type="button" id="playSound" class="ghost">▶ Reproducir sonido</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 José María • Todos los derechos reservados • Diseño futurista</p>
+    <div style="margin-top:8px">Sígueme (opcional): <a href="#">Instagram</a> • <a href="#">Twitter</a></div>
+  </footer>
+
+<script>
+// custom cursor
+const cursor = document.getElementById('cursor');
+window.addEventListener('mousemove', e=>{cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'});
+
+// reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+},{threshold:0.12});
+reveals.forEach(r=>io.observe(r));
+
+// carousel mini
+(function(){
+  const carr = document.querySelector('#miniCarousel');
+  if(!carr) return;
+  const slides = carr.querySelector('.slides');
+  const total = slides.children.length; let idx=0;
+  carr.querySelectorAll('[data-action]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(btn.dataset.action==='next') idx=(idx+1)%total; else idx=(idx-1+total)%total;
+      slides.style.transform = 'translateX(-'+(idx*100)+'%)';
+    });
+  });
+})();
+
+// portfolio modal
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modalImg');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const modalLink = document.getElementById('modalLink');
+document.querySelectorAll('.ver-mas').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const id = btn.dataset.proj;
+    // contenido personalizado por proyecto
+    const data = {
+      '1':{title:'El 9 — Extremo derecho', img:'imagenes/foto22.jpeg.png', desc:'Goles y asistencias. Velocidad en banda y control de balón.', link:'#'},
+      '2':{title:'Mi equipo', img:'imagenes/foto21.jpeg.png', desc:'Trabajo en equipo, estrategia y coordinación en defensa y ataque.', link:'#'},
+      '3':{title:'Currículum', img:'imagenes/foto5.jpeg', desc:'Intereses académicos y logros en matemáticas y ciencias.', link:'#'},
+      '4':{title:'El goat', img:'imagenes/foto4.jpeg', desc:'Dedicación y mejora continua en entrenamiento.', link:'#'}
+    };
+    const d = data[id] || data['1'];
+    modalImg.src = d.img; modalTitle.textContent = d.title; modalDesc.textContent = d.desc; modalLink.href=d.link;
+    modal.classList.add('open');
+  });
+});
+document.getElementById('closeModal').addEventListener('click', ()=>modal.classList.remove('open'));
+modal.addEventListener('click', e=>{ if(e.target===modal) modal.classList.remove('open')});
+
+// form submit (simulado)
+document.getElementById('contactForm').addEventListener('submit', e=>{
+  e.preventDefault(); alert('¡Mensaje enviado! Gracias, ' + (e.target.nombre.value || '')); e.target.reset();
+});
+
+// small sound play
+const audio = new Audio(); audio.src = 'https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3';
+document.getElementById('playSound').addEventListener('click', ()=>audio.play());
+
+// smooth scroll for header links
+document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click', e=>{ e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); }); });
+
+</script>
 
 </body>
 </html>
