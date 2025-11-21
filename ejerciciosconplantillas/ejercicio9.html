@@ -1,119 +1,95 @@
+<!-- Versión mejorada y más completa del portfolio, con organización, accesibilidad y estructura optimizada -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio — José María</title>
+
+  <!-- ========================= ESTILOS ========================= -->
   <style>
     :root{
       --bg:#06070a; --card:#0e1116; --muted:#9aa4b2; --accent:#00e5ff; --neon:#7c3cff; --glass: rgba(255,255,255,0.04);
     }
     *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Segoe UI,Arial,sans-serif}
-    html,body{height:100%}
-    body{background:linear-gradient(120deg,#031428 0%, #071229 50%, #0b1220 100%);color:var(--muted);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    body{background:linear-gradient(120deg,#031428,#071229,#0b1220);color:var(--muted);overflow-x:hidden;min-height:100vh}
 
-    /* animated gradient blobs */
-    .bg-blobs{position:fixed;inset:0;pointer-events:none;z-index:0;}
+    /* Fondo animado */
+    .bg-blobs{position:fixed;inset:0;pointer-events:none;z-index:0}
     .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.6;mix-blend-mode:screen;animation:float 12s ease-in-out infinite}
     .b1{width:480px;height:480px;left:-10%;top:10%;background:linear-gradient(45deg,var(--neon),var(--accent));}
     .b2{width:360px;height:360px;right:-5%;top:30%;background:linear-gradient(135deg,#00ffd5,#0066ff);animation-duration:18s}
     .b3{width:300px;height:300px;left:15%;bottom:-5%;background:linear-gradient(90deg,#ff2dd4,#7c3cff);animation-duration:16s}
-    @keyframes float{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}100%{transform:translateY(0) scale(1)}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
 
-    /* header */
-    header{position:fixed;top:0;left:0;right:0;z-index:30;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
-    .logo{display:flex;align-items:center;gap:12px;color:#fff;font-weight:700;font-size:1.05rem}
-    nav a{color:var(--muted);margin-left:18px;text-decoration:none;font-weight:600}
-    nav a:hover{color:var(--accent);text-shadow:0 0 8px rgba(0,229,255,0.08)}
+    /* HEADER */
+    header{position:fixed;top:0;left:0;right:0;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,18,30,0.35);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05);z-index:20}
+    .logo{display:flex;align-items:center;gap:12px;color:#fff;font-weight:700;font-size:1.1rem}
+    nav a{color:var(--muted);margin-left:20px;text-decoration:none;font-weight:600;transition:0.2s}
+    nav a:hover{color:var(--accent);text-shadow:0 0 8px rgba(0,229,255,0.2)}
 
-    /* hero */
-    .hero{min-height:86vh;display:flex;align-items:center;padding:120px 20px 40px;position:relative;z-index:10}
-    .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:center}
-    .hero-title h1{font-size:3rem;color:#fff;letter-spacing:0.5px}
-    .hero-title p{margin-top:12px;color:var(--muted);font-size:1.05rem}
-    .hero-cta{margin-top:22px;display:flex;gap:12px}
-    .btn{padding:12px 18px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent),var(--neon));color:#001;cursor:pointer;font-weight:700;box-shadow:0 6px 20px rgba(0,229,255,0.06);transition:transform .18s,box-shadow .18s}
-    .btn:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(124,60,255,0.12)}
-    .ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.06)}
+    /* HERO */
+    .hero{min-height:90vh;display:flex;align-items:center;padding:130px 20px 40px;z-index:10}
+    .hero-inner{max-width:1200px;margin:auto;display:grid;grid-template-columns:1fr 350px;gap:40px}
+    .hero-title h1{color:#fff;font-size:3rem;line-height:1.2}
+    .hero-title p{margin-top:12px;font-size:1.1rem;color:var(--muted)}
+    .hero-cta{display:flex;gap:12px;margin-top:26px}
+    .btn{background:linear-gradient(90deg,var(--accent),var(--neon));color:#001;padding:12px 20px;border-radius:12px;border:none;font-weight:700;cursor:pointer;transition:0.2s;box-shadow:0 6px 20px rgba(0,229,255,0.12)}
+    .btn:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(124,60,255,0.25)}
+    .ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.08)}
 
-    /* card profile */
-    .profile-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:18px;box-shadow:0 8px 40px rgba(4,6,19,0.6);border:1px solid rgba(255,255,255,0.04)}
-    .avatar{width:110px;height:110px;border-radius:50%;overflow:hidden;border:3px solid rgba(124,60,255,0.28)}
-    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-    .tag{margin-top:10px;color:var(--accent);font-weight:700}
-    .mini-stats{display:flex;gap:12px;margin-top:12px}
-    .stat{background:var(--glass);padding:8px 12px;border-radius:10px;font-size:0.9rem}
+    /* SOBRE MÍ */
+    section{padding:90px 20px 70px;position:relative;z-index:10}
+    h2{color:#fff;font-size:1.7rem;margin-bottom:20px}
+    .container{max-width:1100px;margin:auto}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    .bio{background:var(--card);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
+    .skills{margin-top:12px;display:flex;flex-wrap:wrap;gap:10px}
+    .skill{padding:8px 14px;background:rgba(124,60,255,0.12);border-radius:50px;color:#d0e6ff;font-weight:600;font-size:0.9rem}
 
-    /* sections */
-    section{padding:80px 20px 60px;position:relative;z-index:10}
-    h2{color:#fff;margin-bottom:18px;font-size:1.5rem}
-    .container{max-width:1100px;margin:0 auto}
-
-    /* about */
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-    .bio{background:var(--card);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-    .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-    .skill{background:transparent;border:1px solid rgba(124,60,255,0.14);padding:8px 12px;border-radius:999px;color:#cdeef7;font-weight:600}
-
-    /* timeline */
-    .timeline{position:relative;margin-top:18px}
-    .timeline:before{content:'';position:absolute;left:14px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent),var(--neon));border-radius:2px}
-    .event{position:relative;padding:12px 16px 12px 44px;margin-bottom:14px;background:rgba(255,255,255,0.02);border-radius:10px}
+    /* TIMELINE */
+    .timeline{margin-top:10px;position:relative}
+    .timeline:before{content:'';position:absolute;left:14px;top:0;bottom:0;width:3px;background:linear-gradient(var(--accent),var(--neon));border-radius:2px}
+    .event{padding:12px 16px 12px 46px;margin-bottom:14px;background:rgba(255,255,255,0.03);border-radius:10px}
     .event h4{color:#fff;margin-bottom:6px}
-    .event small{color:var(--muted)}
 
-    /* portfolio */
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);transition:transform .25s,box-shadow .25s}
-    .card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(11,20,40,0.6)}
-    .card img{width:100%;height:160px;object-fit:cover;display:block}
+    /* PORTAFOLIO */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+    .card{background:rgba(255,255,255,0.04);border-radius:14px;border:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:0.25s}
+    .card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,0,0,0.4)}
+    .card img{height:180px;width:100%;object-fit:cover}
     .card-content{padding:16px}
-    .card-content h3{color:#fff;margin-bottom:8px}
-    .card-content p{color:var(--muted);font-size:0.95rem;margin-bottom:12px}
 
-    .ver-mas{background:transparent;border:1px solid rgba(124,60,255,0.14);padding:8px 12px;border-radius:8px;color:var(--accent);cursor:pointer}
+    .ver-mas{padding:8px 14px;border-radius:8px;background:transparent;color:var(--accent);border:1px solid rgba(124,60,255,0.2);cursor:pointer}
 
-    /* modal */
-    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,12,0.6);visibility:hidden;opacity:0;transition:opacity .18s,visibility .18s;z-index:60}
-    .modal.open{visibility:visible;opacity:1}
-    .modal-card{background:#071224;padding:20px;border-radius:12px;max-width:900px;width:94%;border:1px solid rgba(255,255,255,0.04)}
-    .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    /* GALERÍA */
+    .gallery-img{height:200px;object-fit:cover;border-radius:10px}
 
-    /* contact */
-    form{display:flex;flex-direction:column;gap:12px}
-    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:8px;color:#fff}
-    input::placeholder,textarea::placeholder{color:#9aa4b2}
+    /* CONTACTO */
+    form{display:flex;flex-direction:column;gap:14px}
+    input,textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:12px;border-radius:10px;color:#fff}
 
-    /* footer */
-    footer{padding:30px 20px;text-align:center;color:var(--muted)}
+    footer{text-align:center;padding:30px 10px;color:var(--muted)}
 
-    /* cursor */
-    .cursor{position:fixed;left:0;top:0;width:18px;height:18px;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:9999;border:2px solid var(--accent);box-shadow:0 0 18px rgba(0,229,255,0.08)}
-
-    /* responsive */
-    @media(max-width:900px){.hero-inner{grid-template-columns:1fr;}.avatar{width:90px;height:90px}.about-grid{grid-template-columns:1fr}.hero-title h1{font-size:2.2rem}}
-
-    /* reveal animation */
-    .reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+    /* ANIMACIONES */
+    .reveal{opacity:0;transform:translateY(20px);transition:0.6s}
     .reveal.show{opacity:1;transform:none}
+
+    @media(max-width:900px){.hero-inner{grid-template-columns:1fr}.about-grid{grid-template-columns:1fr}.hero-title h1{font-size:2.3rem}}
   </style>
 </head>
 
 <body>
-
-  <div class="bg-blobs" aria-hidden>
+  <!-- Fondo -->
+  <div class="bg-blobs">
     <div class="blob b1"></div>
     <div class="blob b2"></div>
     <div class="blob b3"></div>
   </div>
 
-  <div class="cursor" id="cursor"></div>
-
+  <!-- HEADER -->
   <header>
-    <div class="logo">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="url(#g)" stroke-width="1.6"/></svg>
-      José María
-    </div>
+    <div class="logo">José María</div>
     <nav>
       <a href="#inicio">Inicio</a>
       <a href="#sobre-mi">Sobre mí</a>
@@ -123,40 +99,68 @@
     </nav>
   </header>
 
+  <!-- HERO -->
   <section id="inicio" class="hero">
     <div class="hero-inner container">
-      <div>
-        <div class="hero-title reveal">
-          <h1>José María — Extremo derecho (9)</h1>
-          <p>Soy un estudiante de 15 años de Maristas. Fan de las mates y las ciencias, sueño con ser ingeniero aeronáutico.</p>
-        </div>
+      <div class="hero-title reveal">
+        <h1>José María — Extremo derecho (9)</h1>
+        <p>Estudiante de 15 años, apasionado por las matemáticas, la física y la aeronáutica. Sueño con diseñar el futuro del vuelo.</p>
+      </div>
 
-        <div class="hero-cta reveal">
-          <button class="btn" onclick="document.getElementById('portafolio').scrollIntoView({behavior:'smooth'})">Ver portafolio</button>
-          <button class="btn ghost" onclick="document.getElementById('sobre-mi').scrollIntoView({behavior:'smooth'})">Sobre mí</button>
-        </div>
+      <div class="hero-cta reveal">
+        <button class="btn" onclick="document.getElementById('portafolio').scrollIntoView({behavior:'smooth'})">Ver portafolio</button>
+        <button class="btn ghost" onclick="document.getElementById('sobre-mi').scrollIntoView({behavior:'smooth'})">Sobre mí</button>
       </div>
     </div>
   </section>
 
-  <!-- SOBRE MI -->
+  <!-- SOBRE MÍ -->
   <section id="sobre-mi">
     <div class="container">
       <h2>Sobre mí</h2>
       <div class="about-grid">
 
         <div class="bio reveal">
-          <p>Soy José María, estudiante de 4º ESO, extremo derecho (9) en Barrio Peral, amante de las mates y la ciencia.</p>
-        </div>
+          <p>Soy José María, estudiante de 4º ESO, extremo derecho (9) en Barrio Peral, amante de las mates, la física y la ingeniería.
+          Busco mejorar día a día tanto en el campo como en mis estudios.</p>
 
-        <div class="reveal">
-          <h3 style="color:#fff">Timeline</h3>
-          <div class="timeline">
-            <div class="event"><h4>2013</h4><small>Aprendí a montar en bici</small></div>
-            <div class="event"><h4>2018</h4><small>Empecé a jugar en el barrio</small></div>
+          <div class="skills">
+            <div class="skill">Velocidad ⚡</div>
+            <div class="skill">Trabajo en equipo 🤝</div>
+            <div class="skill">Disciplina 🧠</div>
+            <div class="skill">Competitividad 🔥</div>
           </div>
         </div>
 
+        <div class="reveal">
+          <h3 style="color:#fff">Mi camino</h3>
+          <div class="timeline">
+            <div class="event"><h4>2010</h4><small>Descubrí el fútbol jugando en el parque con mis amigos</small></div>
+            <div class="event"><h4>2013</h4><small>Aprendí a montar en bici y empecé a entrenar mi resistencia</small></div>
+            <div class="event"><h4>2016</h4><small>Primer torneo escolar ganado como extremo derecho</small></div>
+            <div class="event"><h4>2018</h4><small>Me uní al equipo de Barrio Peral</small></div>
+            <div class="event"><h4>2020</h4><small>Reconocido en el cole como uno de los mejores promedios del curso</small></div>
+            <div class="event"><h4>2022</h4><small>Gané mi primer premio académico por rendimiento sobresaliente</small></div>
+            <div class="event"><h4>2023</h4><small>Me marqué el objetivo de ser ingeniero aeronáutico</small></div>
+            <div class="event"><h4>2024</h4><small>Top 3 de mi clase y gran temporada como extremo</small></div>
+          </div>
+            <div class="event"><h4>2018</h4><small>Comienzo en fútbol Barrio Peral</small></div>
+            <div class="event"><h4>2023</h4><small>Objetivo aeronáutica</small></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MISIÓN -->
+  <section id="mision">
+    <div class="container reveal">
+      <h2>Mi misión</h2>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:28px;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,0.4)">
+        <h3 style="color:#fff;font-size:1.4rem;margin-bottom:10px">🚀 Convertirme en Ingeniero Aeronáutico</h3>
+        <p>Mi meta es diseñar tecnologías capaces de volar más alto, más rápido y más lejos.
+          Entreno, estudio y aprendo cada día para acercarme a ese objetivo.</p>
       </div>
     </div>
   </section>
@@ -165,72 +169,39 @@
   <section id="portafolio">
     <div class="container">
       <h2>Portafolio</h2>
-
       <div class="grid">
+
         <div class="card reveal">
-          <img src="imagenes/foto22.jpeg.png">
+          <img src="imagenes/foto22.jpeg.png" alt="Foto futbol 1">
           <div class="card-content">
-            <h3>El 9 — Extremo derecho</h3>
-            <p>Velocidad en banda, goles y asistencias.</p>
-            <button class="ver-mas" data-proj="1">Ver más</button>
+            <h3>Extremo Derecho</h3>
+            <p>Velocidad, desborde y determinación ofensiva.</p>
+            <button class="ver-mas">Ver más</button>
           </div>
         </div>
 
         <div class="card reveal">
-          <img src="imagenes/foto21.jpeg.png">
+          <img src="imagenes/foto21.jpeg.png" alt="Foto futbol 2">
           <div class="card-content">
             <h3>Mi equipo</h3>
-            <p>5º en liga • espíritu de equipo.</p>
-            <button class="ver-mas" data-proj="2">Ver más</button>
+            <p>5º en liga — trabajo, constancia y unidad.</p>
+            <button class="ver-mas">Ver más</button>
           </div>
         </div>
-      </div>
 
-    </div>
-  </section>
-
-  <!-- SECCIÓN MI MISIÓN AÑADIDA -->
-  <section id="mision">
-    <div class="container reveal">
-      <h2>Mi misión</h2>
-      <div style="
-        background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-        border:1px solid rgba(255,255,255,0.04);
-        padding:28px;
-        border-radius:16px;
-        box-shadow:0 10px 40px rgba(10,20,40,0.5);
-      ">
-        <h3 style="color:#fff; margin-bottom:10px; font-size:1.4rem;">
-          🚀 Objetivo: ser Ingeniero Aeronáutico
-        </h3>
-        <p style="color:var(--muted); line-height:1.6; font-size:1.05rem;">
-          Quiero diseñar máquinas que vuelen alto—igual que mis metas.  
-          Cada día entreno, estudio y me esfuerzo para acercarme a ese sueño.
-        </p>
-
-        <div style="display:flex; gap:12px; margin-top:18px; flex-wrap:wrap;">
-          <div class="skill">Aeronáutica ✈️</div>
-          <div class="skill">Física ⚛️</div>
-          <div class="skill">Velocidad ⚡</div>
-          <div class="skill">Disciplina 🧠</div>
-          <div class="skill">Trabajo en equipo 🤝</div>
-        </div>
       </div>
     </div>
   </section>
-  <!-- FIN SECCIÓN MI MISIÓN -->
 
   <!-- GALERÍA -->
   <section id="galeria">
     <div class="container">
       <h2>Galería</h2>
-
       <div class="grid">
-        <div class="card reveal"><img src="imagenes/foto1.jpeg"></div>
-        <div class="card reveal"><img src="imagenes/foto21.jpeg"></div>
-        <div class="card reveal"><img src="imagenes/foto22.jpeg"></div>
+        <img class="gallery-img reveal" src="imagenes/foto1.jpeg" alt="Galería 1">
+        <img class="gallery-img reveal" src="imagenes/foto21.jpeg" alt="Galería 2">
+        <img class="gallery-img reveal" src="imagenes/foto22.jpeg" alt="Galería 3">
       </div>
-
     </div>
   </section>
 
@@ -238,37 +209,26 @@
   <section id="contacto">
     <div class="container">
       <h2>Contacto</h2>
-      <form id="contactForm" class="reveal">
-        <input type="text" name="nombre" placeholder="Tu nombre" value="José María" required>
-        <input type="email" name="email" placeholder="tu@correo.com" required>
-        <textarea name="mensaje" rows="5" placeholder="Escribe tu mensaje" required></textarea>
+      <form class="reveal">
+        <input type="text" placeholder="Tu nombre" required>
+        <input type="email" placeholder="tu@correo.com" required>
+        <textarea rows="5" placeholder="Escribe tu mensaje" required></textarea>
         <button class="btn" type="submit">Enviar</button>
       </form>
     </div>
   </section>
 
   <footer>
-    <p>© 2025 José María • Diseño futurista</p>
+    © 2025 José María • Diseño futurista
   </footer>
 
-<script>
-const cursor = document.getElementById('cursor');
-window.addEventListener('mousemove', e=>{
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
-
-const reveals = document.querySelectorAll('.reveal');
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('show');
-      io.unobserve(e.target);
-    }
-  });
-});
-reveals.forEach(r=>io.observe(r));
-</script>
-
+  <!-- Scripts -->
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}});
+    });
+    reveals.forEach(r=>io.observe(r));
+  </script>
 </body>
 </html>
